@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: gateway-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+    gateway:
+      routes:
+        - id: user-service-route
+          uri: lb://user-service
+          predicates:
+            - Path=/user/**
+        - id: order-service-route
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
